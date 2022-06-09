@@ -18,6 +18,7 @@
 namespace Opis\JsonSchema\Resolvers;
 
 use Opis\JsonSchema\Uri;
+use Symfony\Component\Yaml\Yaml;
 
 class SchemaResolver
 {
@@ -35,6 +36,16 @@ class SchemaResolver
 
     /** @var array */
     protected array $dirs = [];
+
+    protected function parse(Uri $uri, $data) {
+        if (substr($uri->path(), -4) === '.yml') {
+            if (!class_exists('Symfony\Component\Yaml\Yaml')) {
+                throw new \Exception('Parsing .yml schemas requires symfony/yaml to be included');
+            }
+            return Yaml::parse($data,  Yaml::PARSE_OBJECT_FOR_MAP);
+        }
+        return json_decode($data, false);
+    }
 
     /**
      * @param Uri $uri
@@ -67,7 +78,7 @@ class SchemaResolver
             return null;
         }
 
-        $data = json_decode($data, false);
+        $data = $this->parse($uri, $data);
 
         return $data;
     }

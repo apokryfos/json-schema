@@ -29,7 +29,8 @@
     "require-dev": {
         "ext-bcmath": "*",
         "ext-intl": "*",
-        "phpunit/phpunit": "^9.0"
+        "phpunit/phpunit": "^9.0",
+        "symfony/yaml": "^6.1"
     },
     "autoload": {
         "psr-4": {
@@ -45,5 +46,8 @@
         "branch-alias": {
             "dev-master": "2.x-dev"
         }
+    },
+    "suggest": {
+        "symfony/yaml": "Allows parsing of schemas written in YAML"
     }
 }
